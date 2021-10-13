@@ -46,3 +46,32 @@ The first commit into this repository contains the files provided by oozou, as w
   
     This `Dockerfile` can be run using the following command: `docker build --tag node-docker --build-arg BUILDTIME_NODE_ENV=<ENV> .`
     Where `<ENV>` is one of `test`, `development` or `production`.
+
+### Exercise Two - Docker-Compose
+
+This second commit contains updates to this readme file, as well as a couple of small updates to the
+Dockerfile, and the creation of the docker-compose.yml `Docker compose` file. 
+
+This `docker-compose` file contains the following configuration:
+
+```yaml
+version: "3"
+services:
+  nodeapp:
+    build:
+      context: .
+      args:
+        BUILDTIME_NODE_ENV: test
+  graphite-statsd:
+    image: graphiteapp/graphite-statsd
+    ports:
+      # - 127.0.0.1:2003-2004:2003-2004 carbon receiver - plaintext and pickle. Disabled as not used
+      # - 127.0.0.1:2023-2024:2023-2024 carbon aggregator - plaintext and pickle. Disabled as not used
+      - 127.0.0.1:8125:8125/udp # Statsd metrics
+      - 127.0.0.1:8126:8126 # Statsd admin port
+      - 127.0.0.1:80:80 # nginx/admin
+```
+
+* The nodeJS application is built into a container called "nodeapp" using the **test** ``BUILDTIME_NODE_ENV``. This maps to the conditional `RUN` for **test** in the Dockerfile.
+* statsd has been implemented using the community image (graphiteapp/graphite-statds)
+* No ports have been exposed on the `nodeapp` and the ports that are available for the `graphite-statsd` container have been set to localhost only.

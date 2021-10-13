@@ -1,0 +1,15 @@
+version: "3"
+services:
+  nodeapp:
+    build:
+      context: .
+      args:
+        BUILDTIME_NODE_ENV: test
+  graphite-statsd:
+    image: graphiteapp/graphite-statsd
+    ports:
+      # - 127.0.0.1:2003-2004:2003-2004 carbon receiver - plaintext and pickle. Disabled as not used
+      # - 127.0.0.1:2023-2024:2023-2024 carbon aggregator - plaintext and pickle. Disabled as not used
+      - 127.0.0.1:8125:8125/udp # Statsd metrics
+      - 127.0.0.1:8126:8126 # Statsd admin port
+      - 127.0.0.1:80:80 # nginx/admin
