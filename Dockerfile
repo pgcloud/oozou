@@ -15,10 +15,10 @@ WORKDIR /app
 
 COPY app/ /app
 
-RUN if [ "$BuildMode" = "test" ] ; then npm install --only=development; fi
+RUN if [ "$BUILDTIME_NODE_ENV" = "test" ] ; then npm install --only=development; fi
 
-RUN if [ "$BuildMode" = "development" ] ; then npm install --only=development; fi
+RUN if [ "$BUILDTIME_NODE_ENV" = "development" ] ; then npm install --only=development; fi
 
-RUN if [ "$BuildMode" = "production" ] ; then npm install --only=production; fi
+RUN if [ "$BUILDTIME_NODE_ENV" = "production" ] ; then npm install --only=production; fi
 
 CMD ["node", "index.js"]

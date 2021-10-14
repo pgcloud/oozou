@@ -12,4 +12,4 @@ services:
       # - 127.0.0.1:2023-2024:2023-2024 carbon aggregator - plaintext and pickle. Disabled as not used
       - 127.0.0.1:8125:8125/udp # Statsd metrics
       - 127.0.0.1:8126:8126 # Statsd admin port
-      - 127.0.0.1:80:80 # nginx/admin
+      - 80:80 # nginx/admin
